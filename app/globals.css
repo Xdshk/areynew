@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg: #050505;
+    --bg-elevated: #0a0a0a;
+    --bg-card: #080808;
+    --fg: #f5f5f5;
+    --fg-secondary: rgba(245, 245, 245, 0.7);
+    --muted: rgba(255, 255, 255, 0.45);
+    --muted-weak: rgba(255, 255, 255, 0.25);
+    --accent: #8b6f6f;
+    --accent-hover: #a08282;
+    --accent-dim: rgba(139, 111, 111, 0.15);
+    --border: rgba(255, 255, 255, 0.06);
+    --border-light: rgba(255, 255, 255, 0.1);
+    --chrome: rgba(255, 255, 255, 0.03);
+    --surface: rgba(255, 255, 255, 0.02);
+    --font-editorial: "Spectral", Georgia, "Times New Roman", serif;
+    --font-brand: "Great Vibes", cursive;
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background: var(--bg);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+}
+
+@layer components {
+  /* Typography */
+  .font-brand {
+    font-family: var(--font-brand);
+  }
+
+  .font-editorial {
+    font-family: var(--font-editorial);
+  }
+
+  /* Navigation */
+  .nav-link {
+    position: relative;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.5s var(--ease-out-expo);
+  }
+
+  .nav-link:hover {
+    color: var(--fg);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.6s var(--ease-out-quint);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Section label */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted-weak);
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  .divider-accent {
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  /* Project card base */
+  .project-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .project-card .card-image {
+    transition: transform 1.4s var(--ease-out-quint), filter 0.8s ease;
+  }
+
+  .project-card:hover .card-image {
+    transform: scale(1.06);
+    filter: brightness(0.7);
+  }
+
+  .project-card .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 5, 0.95) 0%,
+      rgba(5, 5, 5, 0.6) 30%,
+      rgba(5, 5, 5, 0.1) 60%,
+      transparent 100%
+    );
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out-expo);
+  }
+
+  .project-card:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .project-card .card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+    transform: translateY(24px);
+    opacity: 0;
+    transition: transform 0.7s var(--ease-out-quint),
+                opacity 0.5s var(--ease-out-expo);
+  }
+
+  .project-card:hover .card-content {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Magnetic button */
+  .magnetic-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s var(--ease-out-quint),
+                border-color 0.4s ease,
+                color 0.4s ease,
+                background 0.4s ease;
+  }
+
+  .magnetic-btn:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Text reveal animation */
+  .reveal-line {
+    overflow: hidden;
+  }
+
+  .reveal-line > * {
+    transform: translateY(110%);
+    transition: transform 1s var(--ease-out-quint);
+  }
+
+  .reveal-line.revealed > * {
+    transform: translateY(0);
+  }
+
+  /* Counter */
+  .counter {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* Selection */
+  ::selection {
+    background: var(--accent-dim);
+    color: var(--fg);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  /* Image loading */
+  img {
+    transition: opacity 0.4s ease;
+  }
+
+  /* Smooth section transitions */
+  section {
+    position: relative;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Stagger delays */
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
+  .delay-600 { transition-delay: 600ms; }
+  .delay-700 { transition-delay: 700ms; }
+  .delay-800 { transition-delay: 800ms; }
+
+  /* Custom easing */
+  .ease-expo { transition-timing-function: var(--ease-out-expo); }
+  .ease-quint { transition-timing-function: var(--ease-out-quint); }
+}
