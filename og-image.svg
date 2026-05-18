@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#09090b"/>
+      <stop offset="100%" stop-color="#18181b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.3"/>
+      <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#accent)"/>
+  <circle cx="200" cy="300" r="200" fill="#06b6d4" opacity="0.08"/>
+  <circle cx="900" cy="280" r="250" fill="#8b5cf6" opacity="0.06"/>
+  <text x="600" y="290" font-family="Georgia, serif" font-size="72" fill="#fafafa" text-anchor="middle" font-weight="bold">Arey Agency</text>
+  <text x="600" y="380" font-family="Georgia, serif" font-size="28" fill="#a1a1aa" text-anchor="middle">Креативное агентство</text>
+  <text x="600" y="430" font-family="Georgia, serif" font-size="20" fill="#71717a" text-anchor="middle">Афиши · Визуал · Брендинг</text>
+</svg>
